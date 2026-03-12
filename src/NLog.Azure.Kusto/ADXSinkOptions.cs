@@ -9,7 +9,7 @@ namespace NLog.Azure.Kusto
     internal sealed class ADXSinkOptions
     {
         private const string AppName = "NLog.Azure.Kusto";
-        private const string ClientVersion = "3.0.0";
+        private const string ClientVersion = "3.1.0";
         private const string IngestPrefix = "ingest-";
         private const string ProtocolSuffix = "://";
 
@@ -48,7 +48,7 @@ namespace NLog.Azure.Kusto
             // The connection string in most circumstances will not be an ingest endpoint. Just adding a double check on this.
             string dmConnectionStringEndpoint = ConnectionString.Contains(IngestPrefix) ? ConnectionString : ConnectionString.ReplaceFirstOccurrence(ProtocolSuffix, ProtocolSuffix + IngestPrefix);
             // For ingest we need not have all the options
-            return GetKcsbWithAuthentication(dmConnectionStringEndpoint.Split("?")[0]);
+            return GetKcsbWithAuthentication(dmConnectionStringEndpoint.Split('?')[0]);
         }
 
         public KustoConnectionStringBuilder GetEngineKcsb()
