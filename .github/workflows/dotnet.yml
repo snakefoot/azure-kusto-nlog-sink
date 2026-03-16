@@ -10,12 +10,12 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    environment: e2e
+    timeout-minutes: 60
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
@@ -24,6 +24,6 @@ jobs:
       run: dotnet build -c Release src --no-restore
     - name: Test
       env:
-        DATABASE : ${{vars.DATABASE}}
-        CONNECTION_STRING : ${{vars.CONNECTION_STRING}}
+        DATABASE : ${{secrets.DATABASE}}
+        CONNECTION_STRING : ${{secrets.CONNECTION_STRING}}
       run: dotnet test src -c Release --no-build --verbosity normal
